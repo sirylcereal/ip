@@ -69,14 +69,14 @@ public class Merlie {
                     System.out.println(bot + "Rawrr, enter the task number instead (unmark <task num>)");
                 }
 
-
+            // Delete Task
             } else if (input.startsWith("delete ")) {
                 try {
                     int index = Integer.parseInt(input.split(" ")[1]) - 1;
                     if (index >= 0 && index < list.size()) {
                         Task task = list.get(index);
                         list.remove(index);
-                        System.out.println(bot + "Okie, I've sprayed water on the task, so it's gone...:");
+                        System.out.println(bot + "Okie, I've sprayed water on the task, so it has EXSTINGUISHED...:");
                         System.out.println("     " + task);
                         System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
                     }
@@ -84,8 +84,10 @@ public class Merlie {
                         System.out.println(bot + "Rawrr, enter a valid task number");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println(bot + "Rawrr, enter the task number instead (unmark <task num>)");
+                    System.out.println(bot + "Rawrr, enter the task number instead (delete <task num>)");
                 }
+
+            // Add Todo Task to List
             } else if (input.startsWith("todo ")) {
                 String description = input.substring(5).trim();
 
@@ -98,6 +100,7 @@ public class Merlie {
                     System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
                 }
 
+            // Add Deadline Task to List
             } else if (input.startsWith("deadline ")) {
                 String text = input.substring(9).trim();
 
@@ -124,7 +127,7 @@ public class Merlie {
                     System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
                 }
 
-                // Add Task to List
+            // Add Event Task to List
             } else if (input.startsWith("event ")) {
                 String text = input.substring(6).trim();
                 String description = "";
@@ -166,23 +169,16 @@ public class Merlie {
                 System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
             }
 
-
+            // Echo User if Not Command
             } else if (!input.isEmpty()) {
-                if (list.stream().anyMatch(task -> task.getDescription()
-                        .equalsIgnoreCase(input))) {
-                    System.out.println(bot + input + " is already in your list!");
-                }
-                else{
-                    Task newTask = new Task(input);
-                    list.add(newTask);
-                    System.out.println(bot + "added: " + input);
-                }
+                System.out.println(bot + "Echo after you AH!: " + input);
             }
             System.out.println(line);
         }
         sc.close();
     }
 
+    // Helper Method to Check for Duplicates and Handle Respectively
     static boolean haveDuplicate(Task newTask, List<Task> list) {
         String bot = "Merlie: ";
         for (Task task : list) {

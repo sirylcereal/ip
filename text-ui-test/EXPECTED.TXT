@@ -3,6 +3,8 @@ ____________________________________________________________
 Merlie: Hello! I'm Merlie the Merlion
 Merlie: What can I do for you?
 ____________________________________________________________
+You: Merlie: Echo after you AH!: HELLO
+____________________________________________________________
 You: Merlie: Got it! I've added this to your task list:
 	[T][ ] buy milk
 Merlie: Now you have 1 tasks in the list.
@@ -39,8 +41,14 @@ ____________________________________________________________
 You:  Merlie: Congratulations on completing your task:
      [T][X] buy milk
 ____________________________________________________________
-You:  Merlie: Rawrr, I've marked this task as not done (YET):
+You: Merlie: Rawrr, I've marked this task as not done (YET):
      [T][ ] buy milk
+____________________________________________________________
+You: Merlie: Rawrr, enter a valid task number
+____________________________________________________________
+You: Merlie: Okie, I've sprayed water on the task, so it has EXSTINGUISHED...:
+     [T][ ] buy milk
+Merlie: Now you have 2 tasks in the list.
 ____________________________________________________________
 You: Merlie: Hope to see you again soon! Majulah Singapura!
 ____________________________________________________________
