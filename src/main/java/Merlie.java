@@ -69,7 +69,87 @@ public class Merlie {
                     System.out.println(bot + "Rawrr, enter the task number instead (unmark <task num>)");
                 }
 
-            // Add Task to List
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5).trim();
+
+                if (list.stream().anyMatch(task -> task.getDescription().equalsIgnoreCase(description)))
+                    System.out.println(bot + "Rawrr, " + description + " is already in your list!");
+                else {
+                    Task newTask = new Todo(description);
+                    list.add(newTask);
+                    System.out.println(bot + "Got it! I've added this to your task list:\n\t" + newTask);
+                    System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                }
+
+            } else if (input.startsWith("deadline ")) {
+                String text = input.substring(9).trim();
+
+                if (!text.contains(" /by ")) {
+                    System.out.println(bot + "Rawrr, provide a deadline using '/by' in the correct syntax  (deadline <task> /by <deadline>");
+                    System.out.println(line);
+                    continue;
+                }
+
+                String[] taskInfo = text.split(" /by ", 2);
+                String description = taskInfo[0].trim();
+                String by = taskInfo[1].trim();
+
+                if (description.isEmpty() || by.isEmpty()) {
+                    System.out.println(bot + "Rawrr, both description and deadline must be non-empty!");
+                    System.out.println(line);
+                    continue;
+                }
+
+                Task newTask = new Deadline(description, by);
+                if (!haveDuplicate(newTask,list)) {
+                    list.add(newTask);
+                    System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
+                    System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                }
+
+                // Add Task to List
+            } else if (input.startsWith("event ")) {
+                String text = input.substring(6).trim();
+                String description = "";
+                String from = "";
+                String to = "";
+
+                try {
+
+                    if (!text.contains(" /from ") || !text.contains(" /to ")) {
+                        System.out.println(bot + "Rawrr, provide a date range in the correct syntax (event <task> /from <start> /to <end>");
+                        System.out.println(line);
+                        continue;
+                    }
+                    String[] taskInfo1 = text.split(" /from ", 2);
+                    description = taskInfo1[0].trim();
+
+                    String[] taskInfo2 = taskInfo1[1].split(" /to ", 2);
+                    from = taskInfo2[0].trim();
+                    to = taskInfo2[1].trim();
+                }
+                catch(ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Rawrr, create the event task in the correct syntax" +
+                            "(event <task> /from <start> /to <end>");
+                    System.out.println(line);
+                    continue;
+                }
+
+            if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
+                System.out.println(bot + "Rawrr, description and date range must be non-empty!");
+                System.out.println(line);
+                continue;
+            }
+
+            Task newTask = new Event(description,from,to);
+
+            if (!haveDuplicate(newTask,list)) {
+                list.add(newTask);
+                System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
+                System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+            }
+
+
             } else if (!input.isEmpty()) {
                 if (list.stream().anyMatch(task -> task.getDescription()
                         .equalsIgnoreCase(input))) {
@@ -84,5 +164,19 @@ public class Merlie {
             System.out.println(line);
         }
         sc.close();
+    }
+
+    static boolean haveDuplicate(Task newTask, List<Task> list) {
+        String bot = "Merlie: ";
+        for (Task task : list) {
+            if (task.isDuplicate(newTask)) {
+                System.out.println(bot + "Rawrr, " + newTask.getDescription() + " is already in your list!");
+                return true;
+            } else if (task.updateIfSameDesc(newTask)) {
+                System.out.println(bot + "Ooo, updated the task for: " + task);
+                return true;
+            }
+        }
+        return false;
     }
 }

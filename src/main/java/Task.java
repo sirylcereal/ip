@@ -23,6 +23,14 @@ public class Task {
         return this.description; // mark done task with X
     }
 
+    public boolean isDuplicate(Task other) {
+        return this.description.equalsIgnoreCase(other.description);
+    }
+
+    public boolean updateIfSameDesc(Task other) {
+        return false;
+    }
+
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
