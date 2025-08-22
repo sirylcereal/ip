@@ -59,7 +59,7 @@ public class Merlie {
                     int index = Integer.parseInt(input.split(" ")[1]) - 1;
                     if (index >= 0 && index < list.size()) {
                         list.get(index).markUndone();
-                        System.out.println(" Merlie: Rawrr, I've marked this task as not done (YET):");
+                        System.out.println(bot + "Rawrr, I've marked this task as not done (YET):");
                         System.out.println("     " + list.get(index));
                     }
                     else {
@@ -69,6 +69,23 @@ public class Merlie {
                     System.out.println(bot + "Rawrr, enter the task number instead (unmark <task num>)");
                 }
 
+
+            } else if (input.startsWith("delete ")) {
+                try {
+                    int index = Integer.parseInt(input.split(" ")[1]) - 1;
+                    if (index >= 0 && index < list.size()) {
+                        Task task = list.get(index);
+                        list.remove(index);
+                        System.out.println(bot + "Okie, I've sprayed water on the task, so it's gone...:");
+                        System.out.println("     " + task);
+                        System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                    }
+                    else {
+                        System.out.println(bot + "Rawrr, enter a valid task number");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(bot + "Rawrr, enter the task number instead (unmark <task num>)");
+                }
             } else if (input.startsWith("todo ")) {
                 String description = input.substring(5).trim();
 
