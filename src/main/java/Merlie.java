@@ -1,15 +1,24 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Main application class for Merlie the Merlion chatbot.
+ * Handles user input and manages tasks.
+ */
 public class Merlie {
+
+    /**
+     * Main entry point of the application.
+     *
+     * @param args Command-line arguments (ignored)
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String line = "____________________________________________________________";
         String bot = "Merlie: ";
         String user = "You: ";
-        List<Task> list = new ArrayList<>();
+        ListFile listFile = new ListFile("./data/tasklist.txt");
+        List<Task> list = listFile.load();
 
         System.out.println("\n" + line);
         System.out.println(bot + "Hello! I'm Merlie the Merlion\n"
@@ -43,6 +52,7 @@ public class Merlie {
                     int index = Integer.parseInt(input.split(" ")[1]) - 1;
                     if (index >= 0 && index < list.size()) {
                         list.get(index).markDone();
+                        listFile.save(list);
                         System.out.println(" Merlie: Congratulations on completing your task:");
                         System.out.println("     " + list.get(index));
                     }
@@ -59,6 +69,7 @@ public class Merlie {
                     int index = Integer.parseInt(input.split(" ")[1]) - 1;
                     if (index >= 0 && index < list.size()) {
                         list.get(index).markUndone();
+                        listFile.save(list);
                         System.out.println(bot + "Rawrr, I've marked this task as not done (YET):");
                         System.out.println("     " + list.get(index));
                     }
@@ -76,6 +87,7 @@ public class Merlie {
                     if (index >= 0 && index < list.size()) {
                         Task task = list.get(index);
                         list.remove(index);
+                        listFile.save(list);
                         System.out.println(bot + "Okie, I've sprayed water on the task, so it has EXSTINGUISHED...:");
                         System.out.println("     " + task);
                         System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
@@ -96,6 +108,7 @@ public class Merlie {
                 else {
                     Task newTask = new Todo(description);
                     list.add(newTask);
+                    listFile.save(list);
                     System.out.println(bot + "Got it! I've added this to your task list:\n\t" + newTask);
                     System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
                 }
@@ -121,8 +134,9 @@ public class Merlie {
                 }
 
                 Task newTask = new Deadline(description, by);
-                if (!haveDuplicate(newTask,list)) {
+                if (!isInTaskList(newTask, list, listFile)) {
                     list.add(newTask);
+                    listFile.save(list);
                     System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
                     System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
                 }
@@ -135,7 +149,6 @@ public class Merlie {
                 String to = "";
 
                 try {
-
                     if (!text.contains(" /from ") || !text.contains(" /to ")) {
                         System.out.println(bot + "Rawrr, provide a date range in the correct syntax (event <task> /from <start> /to <end>");
                         System.out.println(line);
@@ -147,8 +160,7 @@ public class Merlie {
                     String[] taskInfo2 = taskInfo1[1].split(" /to ", 2);
                     from = taskInfo2[0].trim();
                     to = taskInfo2[1].trim();
-                }
-                catch(ArrayIndexOutOfBoundsException e) {
+                } catch(ArrayIndexOutOfBoundsException e) {
                     System.out.println("Rawrr, create the event task in the correct syntax" +
                             "(event <task> /from <start> /to <end>");
                     System.out.println(line);
@@ -163,8 +175,9 @@ public class Merlie {
 
             Task newTask = new Event(description,from,to);
 
-            if (!haveDuplicate(newTask,list)) {
+            if (!isInTaskList(newTask, list, listFile)) {
                 list.add(newTask);
+                listFile.save(list);
                 System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
                 System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
             }
@@ -178,14 +191,24 @@ public class Merlie {
         sc.close();
     }
 
-    // Helper Method to Check for Duplicates and Handle Respectively
-    static boolean haveDuplicate(Task newTask, List<Task> list) {
+    /**
+     * Checks if a new task is a duplicate of existing tasks.
+     * Updates the task if necessary.
+     *
+     * @param newTask The task to check.
+     * @param list Existing list of tasks.
+     * @param listFile ListFile object to handle saving of tasks.
+     * @return true If duplicate or updated, false otherwise.
+     */
+    static boolean isInTaskList(Task newTask, List<Task> list, ListFile listFile) {
         String bot = "Merlie: ";
         for (Task task : list) {
             if (task.isDuplicate(newTask)) {
                 System.out.println(bot + "Rawrr, " + newTask.getDescription() + " is already in your list!");
                 return true;
-            } else if (task.updateIfSameDesc(newTask)) {
+            }
+            if (task.isUpdateSuccessful(newTask)) {
+                listFile.save(list);
                 System.out.println(bot + "Ooo, updated the task for: " + task);
                 return true;
             }
