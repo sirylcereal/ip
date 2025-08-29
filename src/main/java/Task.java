@@ -1,35 +1,126 @@
-public class Task {
+/**
+ * Abstract class representing a generic task.
+ * Contains common attributes and methods shared by all tasks.
+ */
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Constructs a Task with the given description.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * Marks this task as done.
+     */
     public void markDone() {
         this.isDone = true;
     }
 
+    /**
+     * Marks this task as not done.
+     */
     public void markUndone() {
         this.isDone = false;
     }
 
+    /**
+     * Returns the status icon of this task.
+     *
+     * @return "X" if done, " " otherwise.
+     */
     public String getStatusIcon() {
         return (this.isDone ? "X" : " "); // mark done task with X
     }
 
+    /**
+     * Returns the description of this task.
+     *
+     * @return Task description.
+     */
     public String getDescription() {
         return this.description; // mark done task with X
     }
 
-    public boolean isDuplicate(Task other) {
+    /**
+     * Checks whether this task has the same description as another task.
+     *
+     * @param other Task to compare with.
+     * @return true If have same description, false otherwise.
+     */
+    public boolean isSameDescription(Task other) {
         return this.description.equalsIgnoreCase(other.description);
     }
 
-    public boolean updateIfSameDesc(Task other) {
-        return false;
+    /**
+     * Checks whether this task is a duplicate of another task.
+     * Considered duplicate if same type and exact fields
+     * OR if different type and same description
+     *
+     * @param other Task to compare with.
+     * @return true If duplicate, false otherwise.
+     */
+    public boolean isDuplicate(Task other) {
+        return this.isSameDescription(other);
     }
+
+    /**
+     * Updates this task if both are of the same type.
+     *
+     * @param other Task to update from
+     * @return true If updated, false otherwise
+     */
+    public abstract boolean isUpdateSuccessful(Task other);
+
+    /**
+     * Processes a line from storage into a Task object.
+     *
+     * @param line the string line from the list file
+     * @return the Task object or null if corrupted
+     */
+    public static Task process(String line) {
+        try {
+            String[] parts = line.split("\\|");
+            String type = parts[0].trim();
+            boolean isDone = parts[1].trim().equals("1");
+            String task = parts[2].trim();
+
+            switch (type) {
+            case "T":
+                Task t = new Todo(task);
+                t.isDone = isDone;
+                return t;
+            case "D":
+                Task d = new Deadline(task, parts[3].trim());
+                d.isDone = isDone;
+                return d;
+            case "E":
+                String[] timeline = parts[3].split(" /to ");
+                Task e = new Event(task, timeline[0].trim(), timeline[1].trim());
+                e.isDone = isDone;
+                return e;
+            default:
+                System.out.println("Rawrr, corrupted line not added to list: " + line);
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Rawrr, corrupted line not added to list: " + line);
+            return null;
+        }
+    }
+
+    /**
+     * Returns the formatted string for saving to file.
+     *
+     * @return formatted string
+     */
+    public abstract String format();
 
     @Override
     public String toString() {
