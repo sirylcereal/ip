@@ -133,12 +133,17 @@ public class Merlie {
                     continue;
                 }
 
-                Task newTask = new Deadline(description, by);
-                if (!isInTaskList(newTask, list, listFile)) {
-                    list.add(newTask);
-                    listFile.save(list);
-                    System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
-                    System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                try {
+                    Task newTask = new Deadline(description, by);
+                    ;
+                    if (!isInTaskList(newTask, list, listFile)) {
+                        list.add(newTask);
+                        listFile.save(list);
+                        System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
+                        System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println(bot + "Rawrr, invalid date format. Use yyyy-MM-dd, d-M-yyyy, or d/M/yyyy");
                 }
 
             // Add Event Task to List
@@ -173,13 +178,17 @@ public class Merlie {
                 continue;
             }
 
-            Task newTask = new Event(description,from,to);
+            try {
+                Task newTask = new Event(description,from,to);
 
-            if (!isInTaskList(newTask, list, listFile)) {
-                list.add(newTask);
-                listFile.save(list);
-                System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
-                System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                if (!isInTaskList(newTask, list, listFile)) {
+                    list.add(newTask);
+                    listFile.save(list);
+                    System.out.println(bot + "Got it! I've added this task:\n\t " + newTask);
+                    System.out.println(bot + "Now you have " + list.size() + " tasks in the list.");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(bot + "Rawrr, invalid date format. Use yyyy-MM-dd, d-M-yyyy, or d/M/yyyy");
             }
 
             // Echo User if Not Command

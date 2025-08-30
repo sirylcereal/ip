@@ -49,7 +49,7 @@ public class ListFile {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Rawrr, error with loading tasks: " + e.getMessage());
+            System.out.println("Merlie: Rawrr, error with loading tasks: " + e.getMessage());
         }
         return tasks;
     }
@@ -67,7 +67,7 @@ public class ListFile {
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Rawrr, error with saving tasks: " + e.getMessage());
+            System.out.println("Merlie: Rawrr, error with saving tasks: " + e.getMessage());
         }
     }
 }
