@@ -1,3 +1,8 @@
+package merlie.ui;
+
+import merlie.task.Task;
+import merlie.tasklist.TaskList;
+
 import java.util.Scanner;
 
 public class Ui {

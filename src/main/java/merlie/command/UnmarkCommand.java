@@ -1,3 +1,11 @@
+package merlie.command;
+
+import merlie.task.Task;
+import merlie.tasklist.TaskList;
+import merlie.ui.Ui;
+import merlie.listfile.ListFile;
+import merlie.exception.MerlieException;
+
 public class UnmarkCommand extends Command {
     private final int index;
 
@@ -6,7 +14,7 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList list, Ui ui, ListFile listFile) {
+    public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {
         if (index < 0 || index >= list.size()) {
             ui.errorOutput("enter a valid task number");
             return;

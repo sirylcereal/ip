@@ -1,3 +1,12 @@
+package merlie;
+
+import merlie.ui.Ui;
+import merlie.tasklist.TaskList;
+import merlie.command.Command;
+import merlie.parser.Parser;
+import merlie.listfile.ListFile;
+import merlie.exception.MerlieException;
+
 import java.util.Scanner;
 import java.util.List;
 

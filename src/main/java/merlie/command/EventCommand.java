@@ -1,3 +1,7 @@
+package merlie.command;
+
+import merlie.task.Event;
+
 import java.time.LocalDateTime;
 
 public class EventCommand extends AddCommand {

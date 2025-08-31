@@ -1,3 +1,7 @@
+package merlie.command;
+
+import merlie.task.Deadline;
+
 import java.time.LocalDateTime;
 
 public class DeadlineCommand extends AddCommand {

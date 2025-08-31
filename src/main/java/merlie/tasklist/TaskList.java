@@ -1,3 +1,10 @@
+package merlie.tasklist;
+
+import merlie.task.Task;
+import merlie.ui.Ui;
+import merlie.listfile.ListFile;
+import merlie.exception.MerlieException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -59,7 +66,7 @@ public class TaskList implements Iterable<Task> {
      * @param listFile ListFile object to handle saving of tasks.
      * @return true If duplicate or updated, false otherwise.
      */
-    public boolean isTaskInList(Task newTask, Ui ui, ListFile listFile) {
+    public boolean isTaskInList(Task newTask, Ui ui, ListFile listFile) throws MerlieException {
         for (Task task : this.tasks) {
             if (task.isDuplicate(newTask)) {
                 ui.errorOutput(newTask.getDescription() + " is already in your list!");

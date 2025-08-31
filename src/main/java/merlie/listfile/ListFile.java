@@ -1,3 +1,9 @@
+package merlie.listfile;
+
+import merlie.task.Task;
+import merlie.tasklist.TaskList;
+import merlie.exception.MerlieException;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,7 +68,7 @@ public class ListFile {
      *
      * @param tasks List of tasks to save.
      */
-    public void save(TaskList list) {
+    public void save(TaskList list) throws MerlieException {
         try (FileWriter fw = new FileWriter(filePath)) {
             for (Task task : list) {
                 fw.write(task.format() + "\n");

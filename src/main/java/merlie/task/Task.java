@@ -1,3 +1,8 @@
+package merlie.task;
+
+import merlie.parser.ParsedDate;
+import merlie.exception.MerlieException;
+
 /**
  * Abstract class representing a generic task.
  * Contains common attributes and methods shared by all tasks.
@@ -112,7 +117,7 @@ public abstract class Task {
                 throw new MerlieException("Incorrect/Missing task type");
             }
         } catch (Exception e) {
-            throw new MerlieException(e);
+            throw new MerlieException(e.getMessage());
         }
     }
 

@@ -1,3 +1,11 @@
+package merlie.command;
+
+import merlie.task.Task;
+import merlie.tasklist.TaskList;
+import merlie.ui.Ui;
+import merlie.listfile.ListFile;
+import merlie.exception.MerlieException;
+
 public abstract class AddCommand extends Command {
     protected final Task task;
 
@@ -6,7 +14,7 @@ public abstract class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList list, Ui ui, ListFile listFile) {
+    public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException{
         if (!list.isTaskInList(task, ui, listFile)) {
             list.add(task);
             listFile.save(list);

@@ -1,3 +1,5 @@
+package merlie.task;
+
 /**
  * Represents a Todo task.
  */
