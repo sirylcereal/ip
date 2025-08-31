@@ -11,10 +11,11 @@ public class Deadline extends Task {
     private boolean hasTime;
 
     /**
-     * Constructs a Deadline with description and due date.
+     * Constructs a Deadline with description, due date, and time flag.
      *
      * @param description Task description.
      * @param by Due date of the task.
+     * @param hasTime Whether the due date includes a specific time.
      */
     public Deadline(String description, LocalDateTime by, boolean hasTime) {
         super(description);
@@ -22,11 +23,6 @@ public class Deadline extends Task {
         this.hasTime = hasTime;
     }
 
-    /**
-     * Returns the deadline of this task.
-     *
-     * @return Deadline as a LocalDate.
-     */
     public LocalDateTime getBy() {
         return this.by;
     }
@@ -35,11 +31,6 @@ public class Deadline extends Task {
         return this.hasTime;
     }
 
-    /**
-     * Sets or updates the deadline of this task.
-     *
-     * @param by The new deadline.
-     */
     private void setBy(LocalDateTime by, boolean hasTime) {
         this.by = by;
         this.hasTime = hasTime;;

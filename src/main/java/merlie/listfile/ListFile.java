@@ -12,13 +12,13 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * Handles loading and saving of tasks to a file.
+ * Handles saving and loading of tasks to and from a file.
  */
 public class ListFile {
     private final String filePath;
 
     /**
-     * Constructs a ListFile handler with the specified file path.
+     * Constructs a ListFile with the specified file path.
      *
      * @param filePath Path to the stored list file.
      */
@@ -30,7 +30,7 @@ public class ListFile {
      * Loads tasks from file.
      * Creates file and directories if they do not exist.
      *
-     * @return List of tasks.
+     * @return TaskList containing the tasks read from the file.
      */
     public TaskList load() {
         TaskList list = new TaskList();
@@ -64,9 +64,10 @@ public class ListFile {
     }
 
     /**
-     * Saves tasks to file.
+     * Saves the tasks to file.
      *
-     * @param tasks List of tasks to save.
+     * @param list TaskList to save to file.
+     * @throws MerlieException If an error occurs during saving.
      */
     public void save(TaskList list) throws MerlieException {
         try (FileWriter fw = new FileWriter(filePath)) {

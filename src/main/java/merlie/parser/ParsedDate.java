@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a parsed date and whether it contains a specific time.
+ */
 public class ParsedDate {
     public final LocalDateTime dateTime;
     public final boolean hasTime;
@@ -22,12 +25,24 @@ public class ParsedDate {
             DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
     };
 
-
+    /**
+     * Constructs a ParsedDate object.
+     *
+     * @param dateTime The parsed LocalDateTime value.
+     * @param hasTime  True if the parsed input included a specific time, false if only a date.
+     */
     public ParsedDate(LocalDateTime dateTime, boolean hasTime) {
         this.dateTime = dateTime;
         this.hasTime = hasTime;
     }
 
+    /**
+     * Parses a string into a ParsedDate.
+     *
+     * @param input Date string to parse.
+     * @return ParsedDate object containing the date and hasTime flag.
+     * @throws MerlieException If the string cannot be parsed as a valid date.
+     */
     public static ParsedDate parseDate(String input) throws MerlieException {
         for (DateTimeFormatter format : TIME_FORMATS) {
             try {
@@ -37,7 +52,6 @@ public class ParsedDate {
             }
         }
 
-        // Next, try parsing with DATE_ONLY_FORMATS
         for (DateTimeFormatter format : DATE_ONLY_FORMATS) {
             try {
                 LocalDate localDate = LocalDate.parse(input, format);
@@ -46,7 +60,6 @@ public class ParsedDate {
             }
         }
 
-        // If none matched, throw exception
         throw new MerlieException("invalid date format. Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)");
     }
 

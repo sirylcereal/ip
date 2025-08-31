@@ -44,11 +44,6 @@ public abstract class Task {
         return (this.isDone ? "X" : " "); // mark done task with X
     }
 
-    /**
-     * Returns the description of this task.
-     *
-     * @return Task description.
-     */
     public String getDescription() {
         return this.description; // mark done task with X
     }
@@ -57,7 +52,7 @@ public abstract class Task {
      * Checks whether this task has the same description as another task.
      *
      * @param other Task to compare with.
-     * @return true If have same description, false otherwise.
+     * @return True if have same description, false otherwise.
      */
     public boolean isSameDescription(Task other) {
         return this.description.equalsIgnoreCase(other.description);
@@ -79,15 +74,16 @@ public abstract class Task {
      * Updates this task if both are of the same type.
      *
      * @param other Task to update from
-     * @return true If updated, false otherwise
+     * @return True if updated, false otherwise
      */
     public abstract boolean isUpdateSuccessful(Task other);
 
     /**
-     * Processes a line from storage into a Task object.
+     * Processes a line from list file into a Task object.
      *
      * @param line the string line from the list file
-     * @return the Task object or null if corrupted
+     * @return the created Task object
+     * @throws MerlieException if the line is malformed or cannot be parsed
      */
     public static Task process(String line) throws MerlieException {
         try {
