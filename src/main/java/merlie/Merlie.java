@@ -41,8 +41,6 @@ public class Merlie {
                 } else {
                     ui.errorOutput(e.getMessage());
                 }
-            } finally {
-                ui.printLine();
             }
         }
     }
