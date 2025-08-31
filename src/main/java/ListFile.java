@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +26,8 @@ public class ListFile {
      *
      * @return List of tasks.
      */
-    public List<Task> load() {
-        List<Task> tasks = new ArrayList<>();
+    public TaskList load() {
+        TaskList list = new TaskList();
         Path path = Paths.get(filePath);
         try {
             if (path.getParent() != null) {
@@ -38,20 +37,24 @@ public class ListFile {
             // Ensure file exists
             if (!Files.exists(path)) {
                 Files.createFile(path);
-                return tasks; // empty list
+                return list; // empty list
             }
 
             List<String> lines = Files.readAllLines(path);
             for (String line : lines) {
-                Task task = Task.process(line);
-                if (task != null) {
-                    tasks.add(task);
+                try {
+                    Task task = Task.process(line);
+                    if (task != null) {
+                        list.add(task);
+                    }
+                } catch (MerlieException e) {
+                    System.out.println("[Warning] Cannot load line: " + line + "\n" + e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.out.println("Merlie: Rawrr, error with loading tasks: " + e.getMessage());
+            System.out.println("[Warning] Cannot load tasks: " + e.getMessage());
         }
-        return tasks;
+        return list;
     }
 
     /**
@@ -59,15 +62,13 @@ public class ListFile {
      *
      * @param tasks List of tasks to save.
      */
-    public void save(List<Task> tasks) {
-        try {
-            FileWriter fw = new FileWriter(filePath);
-            for (Task task : tasks) {
+    public void save(TaskList list) {
+        try (FileWriter fw = new FileWriter(filePath)) {
+            for (Task task : list) {
                 fw.write(task.format() + "\n");
             }
-            fw.close();
         } catch (IOException e) {
-            System.out.println("Merlie: Rawrr, error with saving tasks: " + e.getMessage());
+            throw new MerlieException("error with saving tasks: " + e.getMessage());
         }
     }
 }

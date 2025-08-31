@@ -1,7 +1,5 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Represents a Deadline task with a due date.
@@ -9,17 +7,6 @@ import java.time.format.DateTimeParseException;
 public class Deadline extends Task {
     private LocalDateTime by; // store the deadline as LocalDate
     private boolean hasTime;
-    private static final DateTimeFormatter[] DATE_ONLY_FORMATS = {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-            DateTimeFormatter.ofPattern("d-M-yyyy"),
-            DateTimeFormatter.ofPattern("d/M/yyyy"),
-            DateTimeFormatter.ofPattern("dd/MM/yyyy") // add two-digit support
-    };
-    private static final DateTimeFormatter[] TIME_FORMATS = {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-            DateTimeFormatter.ofPattern("d-M-yyyy HHmm"),
-            DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
-    };
 
     /**
      * Constructs a Deadline with description and due date.
@@ -27,30 +14,10 @@ public class Deadline extends Task {
      * @param description Task description.
      * @param by Due date of the task.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by, boolean hasTime) {
         super(description);
-        parseDate(by);
-    }
-
-    private void parseDate(String date) {
-        for (DateTimeFormatter format : TIME_FORMATS) {
-            try {
-                this.by =  LocalDateTime.parse(date, format);
-                this.hasTime = true;
-                return;
-            } catch (DateTimeParseException e) {
-            }
-        }
-        for (DateTimeFormatter format : DATE_ONLY_FORMATS) {
-            try {
-                LocalDate localDate = LocalDate.parse(date, format);
-                this.by = localDate.atStartOfDay();
-                this.hasTime = false;
-                return;
-            } catch (DateTimeParseException e) {
-            }
-        }
-        throw new IllegalArgumentException();
+        this.by = by;
+        this.hasTime = hasTime;
     }
 
     /**
@@ -62,7 +29,7 @@ public class Deadline extends Task {
         return this.by;
     }
 
-    private boolean getHasTime() {
+    public boolean getHasTime() {
         return this.hasTime;
     }
 
@@ -71,8 +38,9 @@ public class Deadline extends Task {
      *
      * @param by The new deadline.
      */
-    public void setBy(String by) {
-        parseDate(by);
+    private void setBy(LocalDateTime by, boolean hasTime) {
+        this.by = by;
+        this.hasTime = hasTime;;
     }
 
     @Override
@@ -89,8 +57,7 @@ public class Deadline extends Task {
     @Override
     public boolean isUpdateSuccessful(Task other){
         if (this.isSameDescription(other) && other instanceof Deadline d) {
-            this.by = d.getBy();
-            this.hasTime = d.getHasTime();
+            setBy(d.getBy(),d.getHasTime());
             return true;
         }
         return false;

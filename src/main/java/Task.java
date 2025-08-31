@@ -84,7 +84,7 @@ public abstract class Task {
      * @param line the string line from the list file
      * @return the Task object or null if corrupted
      */
-    public static Task process(String line) {
+    public static Task process(String line) throws MerlieException {
         try {
             String[] parts = line.split("\\|");
             String type = parts[0].trim();
@@ -97,21 +97,22 @@ public abstract class Task {
                 t.isDone = isDone;
                 return t;
             case "D":
-                Task d = new Deadline(task, parts[3].trim());
+                ParsedDate by = ParsedDate.parseDate(parts[3].trim());
+                Task d = new Deadline(task, by.getDate(), by.getHasTime());
                 d.isDone = isDone;
                 return d;
             case "E":
                 String[] timeline = parts[3].split(" /to ");
-                Task e = new Event(task, timeline[0].trim(), timeline[1].trim());
+                ParsedDate from = ParsedDate.parseDate(timeline[0].trim());
+                ParsedDate to = ParsedDate.parseDate(timeline[1].trim());
+                Task e = new Event(task, from.getDate(), from.getHasTime(), to.getDate(), to.getHasTime());
                 e.isDone = isDone;
                 return e;
             default:
-                System.out.println("Rawrr, corrupted line not added to list: " + line);
-                return null;
+                throw new MerlieException("Incorrect/Missing task type");
             }
         } catch (Exception e) {
-            System.out.println("Rawrr, corrupted line not added to list: " + line);
-            return null;
+            throw new MerlieException(e);
         }
     }
 
