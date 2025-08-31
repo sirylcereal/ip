@@ -1,7 +1,5 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * Represents an Event task with a start and end time.
@@ -11,17 +9,7 @@ public class Event extends Task {
     private LocalDateTime to;
     private boolean hasToTime;
     private boolean hasFromTime;
-    private static final DateTimeFormatter[] DATE_ONLY_FORMATS = {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-            DateTimeFormatter.ofPattern("d-M-yyyy"),
-            DateTimeFormatter.ofPattern("d/M/yyyy"),
-            DateTimeFormatter.ofPattern("dd/MM/yyyy") // add two-digit support
-    };
-    private static final DateTimeFormatter[] TIME_FORMATS = {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-            DateTimeFormatter.ofPattern("d-M-yyyy HHmm"),
-            DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
-    };
+
 
     /**
      * Constructs an Event with the given description, start time and end time.
@@ -30,52 +18,13 @@ public class Event extends Task {
      * @param from        Start time of the event.
      * @param to          End time of the event.
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, LocalDateTime from, boolean hasFromTime,
+                 LocalDateTime to, boolean hasToTime) {
         super(description);
-        parseFromDate(from);
-        parseToDate(to);
-    }
-
-    private void parseFromDate(String date) {
-        for (DateTimeFormatter format : TIME_FORMATS) {
-            try {
-                this.from = LocalDateTime.parse(date, format);
-                this.hasFromTime = true;
-                return;
-            } catch (DateTimeParseException e) {
-            }
-        }
-        for (DateTimeFormatter format : DATE_ONLY_FORMATS) {
-            try {
-                LocalDate localDate = LocalDate.parse(date, format);
-                this.from = localDate.atStartOfDay();
-                this.hasFromTime = false;
-                return;
-            } catch (DateTimeParseException e) {
-            }
-        }
-        throw new IllegalArgumentException();
-    }
-
-    private void parseToDate(String date) {
-        for (DateTimeFormatter format : TIME_FORMATS) {
-            try {
-                this.to = LocalDateTime.parse(date, format);
-                this.hasToTime = true;
-                return;
-            } catch (DateTimeParseException e) {
-            }
-        }
-        for (DateTimeFormatter format : DATE_ONLY_FORMATS) {
-            try {
-                LocalDate localDate = LocalDate.parse(date, format);
-                this.to = localDate.atStartOfDay();
-                this.hasToTime = false;
-                return;
-            } catch (DateTimeParseException e) {
-            }
-        }
-        throw new IllegalArgumentException();
+        this.from = from;
+        this.hasFromTime = hasFromTime;
+        this.to = to;
+        this.hasToTime = hasToTime;
     }
 
     /**
@@ -109,8 +58,10 @@ public class Event extends Task {
      *
      * @param from The new start time.
      */
-    public void setFrom(String from) {
-        parseFromDate(from);
+    public void setFrom(LocalDateTime from, boolean hasFromTime) {
+        this.from = from;
+        this.hasFromTime = hasFromTime;
+
     }
 
     /**
@@ -118,8 +69,10 @@ public class Event extends Task {
      *
      * @param to The new end time.
      */
-    public void setTo(String to) {
-        parseToDate(to);
+    private void setTo(LocalDateTime to, boolean hasToTime) {
+        this.to = to;
+        this.hasToTime = hasToTime;
+
     }
 
     @Override
@@ -137,10 +90,8 @@ public class Event extends Task {
     @Override
     public boolean isUpdateSuccessful(Task other) {
         if (this.isSameDescription(other) && other instanceof Event e) {
-            this.from = e.getFrom();
-            this.to = e.getTo();
-            this.hasFromTime = e.getHasFromTime();
-            this.hasToTime = e.getHasToTime();
+            setFrom(e.getFrom(), e.getHasFromTime());
+            setTo(e.getTo(), e.getHasToTime());
             return true;
         }
         return false;
