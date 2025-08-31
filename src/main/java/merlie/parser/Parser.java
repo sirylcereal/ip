@@ -11,7 +11,17 @@ import merlie.command.TodoCommand;
 import merlie.command.DeadlineCommand;
 import merlie.command.EventCommand;
 
+/**
+ * Parses user input into commands for execution by Merlie.
+ */
 public class Parser {
+    /**
+     * Parses a string input into a Command object.
+     *
+     * @param input User input string.
+     * @return Corresponding Command object.
+     * @throws MerlieException If the input cannot be parsed into a valid command.
+     */
     public static Command parse(String input) throws MerlieException {
         String[] parts = input.split(" ", 2);
         String commandWord = parts[0].toLowerCase();
@@ -49,6 +59,9 @@ public class Parser {
             }
 
         case "todo":
+            if (arguments.isEmpty()) {
+                throw new MerlieException("description must be non-empty!");
+            }
             return new TodoCommand(arguments);
 
         case "deadline": {
@@ -61,7 +74,6 @@ public class Parser {
 
             if (description.isEmpty() || byString.isEmpty()) {
                 throw new MerlieException("both description and deadline must be non-empty!");
-            }
 
             ParsedDate parsed = ParsedDate.parseDate(byString);
             return new DeadlineCommand(description, parsed.getDate(), parsed.getHasTime());
