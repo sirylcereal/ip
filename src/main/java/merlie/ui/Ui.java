@@ -4,6 +4,8 @@ import merlie.task.Task;
 import merlie.tasklist.TaskList;
 
 import java.util.Scanner;
+import java.util.List;
+
 
 /**
  * Handles all user interactions, such as displaying messages, task updates, and reading input.
@@ -70,6 +72,18 @@ public class Ui {
     }
 
     /**
+     * Prints all matcheing tasks in the provided List<Task>.
+     *
+     * @param list The list of tasks containing all matches to display.
+     */
+    public void showMatches(List<Task> list) {
+        output("Ooo, found the matching tasks in your list:");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + list.get(i));
+        }
+    }
+
+    /**
      * Prints a message for a task marked as done.
      *
      * @param task The Task that was completed.
@@ -117,7 +131,7 @@ public class Ui {
      */
     public void deleteOutput(Task task, int size) {
         output("Okie, I’ve sprayed water on the task, so it has EXSTINGUISHED…:");
-        output("     " + task);
+        System.out.println("     " + task);
         output("Now you have " + size + " tasks in the list.");
     }
 

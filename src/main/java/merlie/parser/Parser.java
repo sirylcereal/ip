@@ -1,5 +1,6 @@
 package merlie.parser;
 
+import merlie.command.FindCommand;
 import merlie.exception.MerlieException;
 import merlie.command.Command;
 import merlie.command.ExitCommand;
@@ -111,6 +112,12 @@ public class Parser {
             return new EventCommand(description, from.getDate(), from.getHasTime(),
                     to.getDate(), to.getHasTime());
         }
+
+        case "find":
+            if (arguments.isEmpty()) {
+                throw new MerlieException("description must be non-empty!");
+            }
+            return new FindCommand(arguments);
 
         default:
             throw new MerlieException("");
