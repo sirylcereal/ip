@@ -14,11 +14,11 @@ public abstract class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException{
+    public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {
         if (!list.isTaskInList(task, ui, listFile)) {
             list.add(task);
             listFile.save(list);
-            ui.addOutput(task,list.size());
+            ui.addOutput(task, list.size());
         }
     }
 }

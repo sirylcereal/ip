@@ -12,7 +12,6 @@ public class Event extends Task {
     private boolean hasToTime;
     private boolean hasFromTime;
 
-
     /**
      * Constructs an Event with the given description, start time and end time.
      *
@@ -34,7 +33,7 @@ public class Event extends Task {
      *
      * @return Start time as a LocalDateTime.
      */
-    public LocalDateTime getFrom() {
+    private LocalDateTime getFrom() {
         return from;
     }
 
@@ -43,7 +42,7 @@ public class Event extends Task {
      *
      * @return End time as a LocalDateTime.
      */
-    public LocalDateTime getTo() {
+    private LocalDateTime getTo() {
         return to;
     }
 
@@ -60,10 +59,9 @@ public class Event extends Task {
      *
      * @param from The new start time.
      */
-    public void setFrom(LocalDateTime from, boolean hasFromTime) {
+    private void setFrom(LocalDateTime from, boolean hasFromTime) {
         this.from = from;
         this.hasFromTime = hasFromTime;
-
     }
 
     /**

@@ -19,7 +19,11 @@ public class Deadline extends Task {
     public Deadline(String description, LocalDateTime by, boolean hasTime) {
         super(description);
         this.by = by;
-        this.hasTime = hasTime;
+        this.hasByTime = hasTime;
+    }
+
+    private boolean getHasByTime() {
+        return this.hasByTime;
     }
 
     /**
@@ -27,12 +31,8 @@ public class Deadline extends Task {
      *
      * @return Deadline as a LocalDate.
      */
-    public LocalDateTime getBy() {
+    private LocalDateTime getBy() {
         return this.by;
-    }
-
-    public boolean getHasTime() {
-        return this.hasTime;
     }
 
     /**
@@ -42,7 +42,7 @@ public class Deadline extends Task {
      */
     private void setBy(LocalDateTime by, boolean hasTime) {
         this.by = by;
-        this.hasTime = hasTime;;
+        this.hasTime = hasTime;
     }
 
     @Override
@@ -57,9 +57,9 @@ public class Deadline extends Task {
     }
 
     @Override
-    public boolean isUpdateSuccessful(Task other){
+    public boolean isUpdateSuccessful(Task other) {
         if (this.isSameDescription(other) && other instanceof Deadline d) {
-            setBy(d.getBy(),d.getHasTime());
+            setBy(d.getBy(), d.getHasByTime());
             return true;
         }
         return false;

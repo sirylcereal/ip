@@ -13,8 +13,7 @@ public class ParsedDate {
     private static final DateTimeFormatter[] DATE_ONLY_FORMATS = {
             DateTimeFormatter.ofPattern("yyyy-MM-dd"),
             DateTimeFormatter.ofPattern("d-M-yyyy"),
-            DateTimeFormatter.ofPattern("d/M/yyyy"),
-            DateTimeFormatter.ofPattern("dd/MM/yyyy") // add two-digit support
+            DateTimeFormatter.ofPattern("d/M/yyyy")
     };
     private static final DateTimeFormatter[] TIME_FORMATS = {
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
@@ -34,20 +33,21 @@ public class ParsedDate {
                 LocalDateTime dt = LocalDateTime.parse(input, format);
                 return new ParsedDate(dt, true);
             } catch (DateTimeParseException e) {
+                // ignore and try next format
             }
         }
 
-        // Next, try parsing with DATE_ONLY_FORMATS
         for (DateTimeFormatter format : DATE_ONLY_FORMATS) {
             try {
                 LocalDate localDate = LocalDate.parse(input, format);
                 return new ParsedDate(localDate.atStartOfDay(), false);  // hasTime = false
             } catch (DateTimeParseException e) {
+                // ignore and try next format
             }
         }
 
-        // If none matched, throw exception
-        throw new MerlieException("invalid date format. Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)");
+        throw new MerlieException("invalid date format. " +
+                "Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)");
     }
 
     public LocalDateTime getDate() {

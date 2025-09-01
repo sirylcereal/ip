@@ -6,7 +6,7 @@ import merlie.tasklist.TaskList;
 import java.util.Scanner;
 
 public class Ui {
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     public void start() {
         System.out.print("\n");
@@ -32,7 +32,7 @@ public class Ui {
         sc.close();
     }
 
-    public void taskSizeOutput (int size) {
+    public void taskSizeOutput(int size) {
         output("You have " + size + " tasks on your list!");
     }
 

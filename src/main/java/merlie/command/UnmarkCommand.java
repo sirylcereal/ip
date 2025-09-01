@@ -19,6 +19,7 @@ public class UnmarkCommand extends Command {
             ui.errorOutput("enter a valid task number");
             return;
         }
+
         Task task = list.getTask(index);
         list.markUndone(index);
         listFile.save(list);

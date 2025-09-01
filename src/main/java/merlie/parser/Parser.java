@@ -37,7 +37,7 @@ public class Parser {
                 int index = Integer.parseInt(arguments) - 1;
                 return new UnmarkCommand(index);
             } catch (NumberFormatException e) {
-                throw new MerlieException("Rawrr, please provide a valid task number for unmark!");
+                throw new MerlieException("please provide a valid task number for unmark!");
             }
 
         case "delete":
@@ -45,7 +45,7 @@ public class Parser {
                 int index = Integer.parseInt(arguments) - 1;
                 return new DeleteCommand(index);
             } catch (NumberFormatException e) {
-                throw new MerlieException("Rawrr, please provide a valid task number for delete!");
+                throw new MerlieException("please provide a valid task number for delete!");
             }
 
         case "todo":
@@ -70,7 +70,8 @@ public class Parser {
 
         case "event": {
             if (!arguments.contains(" /from ") || !arguments.contains(" /to ")) {
-                throw new MerlieException("provide a date range in the correct syntax (event <task> /from <start> /to <end>)");
+                throw new MerlieException("provide a date range in the correct syntax " +
+                        "(event <task> /from <start> /to <end>)");
             }
 
             String description = "";
@@ -84,7 +85,7 @@ public class Parser {
                 fromString = taskInfo2[0].trim();
                 toString = taskInfo2[1].trim();
             } catch (ArrayIndexOutOfBoundsException e) {
-                throw new MerlieException("create the event task in the correct syntax"
+                throw new MerlieException("create the event task in the correct syntax "
                         + "(event <task> /from <start> /to <end>)");
             }
 

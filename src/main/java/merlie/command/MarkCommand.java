@@ -19,6 +19,7 @@ public class MarkCommand extends Command {
             ui.errorOutput("enter a valid task number");
             return;
         }
+
         Task task = list.getTask(index);
         list.markDone(index);
         listFile.save(list);
