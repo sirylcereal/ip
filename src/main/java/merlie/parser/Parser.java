@@ -74,11 +74,11 @@ public class Parser {
 
             if (description.isEmpty() || byString.isEmpty()) {
                 throw new MerlieException("both description and deadline must be non-empty!");
+            }
 
             ParsedDate parsed = ParsedDate.parseDate(byString);
             return new DeadlineCommand(description, parsed.getDate(), parsed.getHasTime());
         }
-
 
         case "event": {
             if (!arguments.contains(" /from ") || !arguments.contains(" /to ")) {
