@@ -4,6 +4,8 @@ import merlie.task.Task;
 import merlie.tasklist.TaskList;
 
 import java.util.Scanner;
+import java.util.List;
+
 
 public class Ui {
     private Scanner sc = new Scanner(System.in);
@@ -27,8 +29,6 @@ public class Ui {
 
     public void end() {
         output("Hope to see you again soon! Majulah Singapura!");
-        printLine();
-        System.out.println("\n");
         sc.close();
     }
 
@@ -40,6 +40,13 @@ public class Ui {
         output("Here’s what you’ve got:");
         for (int i = 0; i < list.size(); i++) {
             System.out.println("  " + (i + 1) + ". " + list.getTask(i));
+        }
+    }
+
+    public void showMatches(List<Task> list) {
+        output("Ooo, found the matching tasks in your list:");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + list.get(i));
         }
     }
 
@@ -65,7 +72,7 @@ public class Ui {
 
     public void deleteOutput(Task task, int size) {
         output("Okie, I’ve sprayed water on the task, so it has EXSTINGUISHED…:");
-        output("     " + task);
+        System.out.println("     " + task);
         output("Now you have " + size + " tasks in the list.");
     }
 
