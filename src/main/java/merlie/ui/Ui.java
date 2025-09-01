@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Handles all user interactions, such as displaying messages, task updates, and reading input.
  */
 public class Ui {
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     /**
      * Prints a welcome message when the application starts.
@@ -26,8 +26,8 @@ public class Ui {
      * Prints a horizontal line separator.
      */
     public void printLine() {
-        System.out.println("_____________________________________________________________________________" +
-                "______________________");
+        System.out.println("_____________________________________________________________________________"
+                + "______________________");
     }
 
     /**
@@ -45,8 +45,6 @@ public class Ui {
      */
     public void end() {
         output("Hope to see you again soon! Majulah Singapura!");
-        //printLine();
-        //System.out.println("\n");
         sc.close();
     }
 
@@ -55,7 +53,7 @@ public class Ui {
      *
      * @param size The number of tasks.
      */
-    public void taskSizeOutput (int size) {
+    public void taskSizeOutput(int size) {
         output("You have " + size + " tasks on your list!");
     }
 

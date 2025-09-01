@@ -27,7 +27,7 @@ public class Merlie {
      */
     public Merlie(String filepath) {
         this.ui = new Ui();
-        this.listFile = new ListFile((filepath));
+        this.listFile = new ListFile(filepath);
         this.taskList = listFile.load();
     }
 

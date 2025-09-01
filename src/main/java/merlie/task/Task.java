@@ -36,16 +36,12 @@ public abstract class Task {
     }
 
     /**
-     * Returns the status icon of this task.
+     * Returns the description of this task.
      *
-     * @return "X" if done, " " otherwise.
+     * @return Task description.
      */
-    public String getStatusIcon() {
-        return (this.isDone ? "X" : " "); // mark done task with X
-    }
-
     public String getDescription() {
-        return this.description; // mark done task with X
+        return this.description;
     }
 
     /**
@@ -106,11 +102,12 @@ public abstract class Task {
                 String[] timeline = parts[3].split(" /to ");
                 ParsedDate from = ParsedDate.parseDate(timeline[0].trim());
                 ParsedDate to = ParsedDate.parseDate(timeline[1].trim());
-                Task e = new Event(task, from.getDate(), from.getHasTime(), to.getDate(), to.getHasTime());
+                Task e = new Event(task, from.getDate(), from.getHasTime(),
+                        to.getDate(), to.getHasTime());
                 e.isDone = isDone;
                 return e;
             default:
-                throw new MerlieException("Incorrect/Missing task type");
+                throw new MerlieException("incorrect/missing task type");
             }
         } catch (Exception e) {
             throw new MerlieException(e.getMessage());
@@ -123,6 +120,15 @@ public abstract class Task {
      * @return formatted string
      */
     public abstract String format();
+
+    /**
+     * Returns the status icon of this task.
+     *
+     * @return "X" if done, " " otherwise.
+     */
+    private String getStatusIcon() {
+        return (this.isDone ? "X" : " ");
+    }
 
     @Override
     public String toString() {

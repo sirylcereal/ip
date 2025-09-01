@@ -27,11 +27,11 @@ public abstract class AddCommand extends Command {
      * Adds the task to the list if it is not a duplicate, updates list file, and shows output to the UI.
      */
     @Override
-    public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException{
+    public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {
         if (!list.isTaskInList(task, ui, listFile)) {
             list.add(task);
             listFile.save(list);
-            ui.addOutput(task,list.size());
+            ui.addOutput(task, list.size());
         }
     }
 }

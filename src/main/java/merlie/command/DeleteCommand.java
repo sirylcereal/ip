@@ -31,6 +31,7 @@ public class DeleteCommand extends Command {
             ui.errorOutput("enter a valid task number");
             return;
         }
+
         Task task = list.getTask(index);
         list.delete(index);
         listFile.save(list);

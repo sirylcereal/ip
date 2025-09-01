@@ -8,32 +8,42 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
     private LocalDateTime by; // store the deadline as LocalDate
-    private boolean hasTime;
+    private boolean hasByTime;
 
     /**
      * Constructs a Deadline with description, due date, and time flag.
      *
      * @param description Task description.
      * @param by Due date of the task.
-     * @param hasTime Whether the due date includes a specific time.
+     * @param hasByTime Whether the due date includes a specific time.
      */
-    public Deadline(String description, LocalDateTime by, boolean hasTime) {
+    public Deadline(String description, LocalDateTime by, boolean hasByTime) {
         super(description);
         this.by = by;
-        this.hasTime = hasTime;
+        this.hasByTime = hasByTime;
     }
 
-    public LocalDateTime getBy() {
+    private boolean getHasByTime() {
+        return this.hasByTime;
+    }
+
+    /**
+     * Returns the deadline of this task.
+     *
+     * @return Deadline as a LocalDate.
+     */
+    private LocalDateTime getBy() {
         return this.by;
     }
 
-    public boolean getHasTime() {
-        return this.hasTime;
-    }
-
-    private void setBy(LocalDateTime by, boolean hasTime) {
+    /**
+     * Sets or updates the deadline of this task.
+     *
+     * @param by The new deadline.
+     */
+    private void setBy(LocalDateTime by, boolean hasByTime) {
         this.by = by;
-        this.hasTime = hasTime;;
+        this.hasByTime = hasByTime;;
     }
 
     @Override
@@ -48,9 +58,9 @@ public class Deadline extends Task {
     }
 
     @Override
-    public boolean isUpdateSuccessful(Task other){
+    public boolean isUpdateSuccessful(Task other) {
         if (this.isSameDescription(other) && other instanceof Deadline d) {
-            setBy(d.getBy(),d.getHasTime());
+            setBy(d.getBy(), d.getHasByTime());
             return true;
         }
         return false;
@@ -58,7 +68,7 @@ public class Deadline extends Task {
 
     @Override
     public String format() {
-        if (hasTime) {
+        if (hasByTime) {
             return "D | " + (isDone ? "1" : "0") + " | " + description + " | " +
                     by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
         } else {
@@ -69,7 +79,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        if (hasTime) {
+        if (hasByTime) {
             return "[D]" + super.toString() + " (by: " +
                     by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
         } else {

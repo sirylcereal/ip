@@ -18,7 +18,7 @@ public class EventCommand extends AddCommand {
      * @param hasToTime Whether the end includes a specific time.
      */
     public EventCommand(String description, LocalDateTime from,
-                        boolean hasFromTime, LocalDateTime to, boolean hasToTime) {
+            boolean hasFromTime, LocalDateTime to, boolean hasToTime) {
         super(new Event(description, from, hasFromTime, to, hasToTime));
     }
 }
