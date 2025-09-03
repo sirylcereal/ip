@@ -1,8 +1,8 @@
 package merlie.command;
 
-import merlie.task.Event;
-
 import java.time.LocalDateTime;
+
+import merlie.task.Event;
 
 /**
  * Adds an Event task to the task list.

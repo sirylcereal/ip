@@ -15,7 +15,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public boolean isUpdateSuccessful(Task other){
+    public boolean isUpdateSuccessful(Task other) {
         return false;
     }
 
@@ -25,7 +25,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[T]" + super.toString();
     }
 }

@@ -1,18 +1,16 @@
 package merlie.parser;
 
-import merlie.exception.MerlieException;
-
-import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import merlie.exception.MerlieException;
 
 /**
  * Represents a parsed date and whether it contains a specific time.
  */
 public class ParsedDate {
-    public final LocalDateTime dateTime;
-    public final boolean hasTime;
     private static final DateTimeFormatter[] DATE_ONLY_FORMATS = {
             DateTimeFormatter.ofPattern("yyyy-MM-dd"),
             DateTimeFormatter.ofPattern("d-M-yyyy"),
@@ -23,6 +21,8 @@ public class ParsedDate {
             DateTimeFormatter.ofPattern("d-M-yyyy HHmm"),
             DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
     };
+    public final LocalDateTime dateTime;
+    public final boolean hasTime;
 
     /**
      * Constructs a ParsedDate object.
@@ -55,14 +55,14 @@ public class ParsedDate {
         for (DateTimeFormatter format : DATE_ONLY_FORMATS) {
             try {
                 LocalDate localDate = LocalDate.parse(input, format);
-                return new ParsedDate(localDate.atStartOfDay(), false);  // hasTime = false
+                return new ParsedDate(localDate.atStartOfDay(), false);
             } catch (DateTimeParseException e) {
                 // ignore and try next format
             }
         }
 
-        throw new MerlieException("invalid date format. " +
-                "Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)");
+        throw new MerlieException("invalid date format. "
+                + "Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)");
     }
 
     public LocalDateTime getDate() {
@@ -72,5 +72,5 @@ public class ParsedDate {
     public boolean getHasTime() {
         return hasTime;
     }
-
 }
+

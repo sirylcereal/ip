@@ -1,8 +1,8 @@
 package merlie.command;
 
-import merlie.task.Deadline;
-
 import java.time.LocalDateTime;
+
+import merlie.task.Deadline;
 
 /**
  * Adds a Deadline task to the task list.

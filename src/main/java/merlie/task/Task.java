@@ -1,11 +1,11 @@
 package merlie.task;
 
-import merlie.parser.ParsedDate;
 import merlie.exception.MerlieException;
+import merlie.parser.ParsedDate;
 
 /**
- * Abstract class representing a generic task.
- * Contains common attributes and methods shared by all tasks.
+ * Abstract class representing a generic task. Contains common attributes and
+ * methods shared by all tasks.
  */
 public abstract class Task {
     protected String description;
@@ -55,9 +55,8 @@ public abstract class Task {
     }
 
     /**
-     * Checks whether this task is a duplicate of another task.
-     * Considered duplicate if same type and exact fields
-     * OR if different type and same description
+     * Checks whether this task is a duplicate of another task. Considered duplicate
+     * if same type and exact fields OR if different type and same description
      *
      * @param other Task to compare with.
      * @return true If duplicate, false otherwise.
@@ -102,8 +101,7 @@ public abstract class Task {
                 String[] timeline = parts[3].split(" /to ");
                 ParsedDate from = ParsedDate.parseDate(timeline[0].trim());
                 ParsedDate to = ParsedDate.parseDate(timeline[1].trim());
-                Task e = new Event(task, from.getDate(), from.getHasTime(),
-                        to.getDate(), to.getHasTime());
+                Task e = new Event(task, from.getDate(), from.getHasTime(), to.getDate(), to.getHasTime());
                 e.isDone = isDone;
                 return e;
             default:

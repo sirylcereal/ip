@@ -1,10 +1,10 @@
 package merlie.command;
 
+import merlie.exception.MerlieException;
+import merlie.listfile.ListFile;
 import merlie.task.Task;
 import merlie.tasklist.TaskList;
 import merlie.ui.Ui;
-import merlie.listfile.ListFile;
-import merlie.exception.MerlieException;
 
 /**
  * Marks a task in the task list as not done.
@@ -24,7 +24,8 @@ public class UnmarkCommand extends Command {
 
     /**
      * {@inheritDoc}
-     * Marks the task at the given index as not done, updates list file, and shows output to the UI.
+     * Marks the task at the given index as not done, updates list
+     * file, and shows output to the UI.
      */
     @Override
     public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {

@@ -1,18 +1,18 @@
 package merlie.tasklist;
 
-import merlie.task.Task;
-import merlie.ui.Ui;
-import merlie.listfile.ListFile;
-import merlie.exception.MerlieException;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
-import java.util.Iterator;
+
+import merlie.exception.MerlieException;
+import merlie.listfile.ListFile;
+import merlie.task.Task;
+import merlie.ui.Ui;
 
 /**
- * Represents a list of tasks.
- * Provides methods to add, delete, mark, and check tasks in the list.
+ * Represents a list of tasks. Provides methods to add, delete, mark, and check
+ * tasks in the list.
  */
 public class TaskList implements Iterable<Task> {
     private List<Task> tasks;
@@ -137,5 +137,4 @@ public class TaskList implements Iterable<Task> {
         }
         return false;
     }
-
 }

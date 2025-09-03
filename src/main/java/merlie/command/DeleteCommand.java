@@ -1,10 +1,10 @@
 package merlie.command;
 
+import merlie.exception.MerlieException;
+import merlie.listfile.ListFile;
 import merlie.task.Task;
 import merlie.tasklist.TaskList;
 import merlie.ui.Ui;
-import merlie.listfile.ListFile;
-import merlie.exception.MerlieException;
 
 /**
  * Deletes a task from the task list.
@@ -22,8 +22,8 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * {@inheritDoc}
-     * Deletes the task at the specified index from the list, updates list file, and shows output to the UI.
+     * {@inheritDoc} Deletes the task at the specified index from the list, updates
+     * list file, and shows output to the UI.
      */
     @Override
     public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {

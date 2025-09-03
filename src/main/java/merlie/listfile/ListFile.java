@@ -1,15 +1,15 @@
 package merlie.listfile;
 
-import merlie.task.Task;
-import merlie.tasklist.TaskList;
-import merlie.exception.MerlieException;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+
+import merlie.exception.MerlieException;
+import merlie.task.Task;
+import merlie.tasklist.TaskList;
 
 /**
  * Handles saving and loading of tasks to and from a file.
@@ -27,8 +27,7 @@ public class ListFile {
     }
 
     /**
-     * Loads tasks from file.
-     * Creates file and directories if they do not exist.
+     * Loads tasks from file. Creates file and directories if they do not exist.
      *
      * @return TaskList containing the tasks read from the file.
      */
@@ -50,9 +49,7 @@ public class ListFile {
             for (String line : lines) {
                 try {
                     Task task = Task.process(line);
-                    if (task != null) {
-                        list.add(task);
-                    }
+                    list.add(task);
                 } catch (MerlieException e) {
                     System.out.println("[Warning] Cannot load line: " + line + "\n" + e.getMessage());
                 }

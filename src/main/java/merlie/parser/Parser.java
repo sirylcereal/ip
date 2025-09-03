@@ -1,16 +1,16 @@
 package merlie.parser;
 
-import merlie.command.FindCommand;
-import merlie.exception.MerlieException;
 import merlie.command.Command;
+import merlie.command.DeadlineCommand;
+import merlie.command.DeleteCommand;
+import merlie.command.EventCommand;
 import merlie.command.ExitCommand;
+import merlie.command.FindCommand;
 import merlie.command.ListCommand;
 import merlie.command.MarkCommand;
-import merlie.command.UnmarkCommand;
-import merlie.command.DeleteCommand;
 import merlie.command.TodoCommand;
-import merlie.command.DeadlineCommand;
-import merlie.command.EventCommand;
+import merlie.command.UnmarkCommand;
+import merlie.exception.MerlieException;
 
 /**
  * Parses user input into commands for execution by Merlie.
@@ -67,7 +67,8 @@ public class Parser {
 
         case "deadline": {
             if (!arguments.contains(" /by ")) {
-                throw new MerlieException("provide a deadline using '/by' in the correct syntax  (deadline <task> /by <deadline>");
+                throw new MerlieException("provide a deadline using '/by' in the correct syntax  "
+                        + "(deadline <task> /by <deadline>");
             }
             String[] taskInfo = arguments.split(" /by ", 2);
             String description = taskInfo[0].trim();
@@ -83,8 +84,8 @@ public class Parser {
 
         case "event": {
             if (!arguments.contains(" /from ") || !arguments.contains(" /to ")) {
-                throw new MerlieException("provide a date range in the correct syntax " +
-                        "(event <task> /from <start> /to <end>)");
+                throw new MerlieException("provide a date range in the correct syntax "
+                        + "(event <task> /from <start> /to <end>)");
             }
 
             String description = "";

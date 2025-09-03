@@ -1,14 +1,11 @@
 package merlie;
 
-import merlie.ui.Ui;
-import merlie.tasklist.TaskList;
 import merlie.command.Command;
-import merlie.parser.Parser;
-import merlie.listfile.ListFile;
 import merlie.exception.MerlieException;
-
-import java.util.Scanner;
-import java.util.List;
+import merlie.listfile.ListFile;
+import merlie.parser.Parser;
+import merlie.tasklist.TaskList;
+import merlie.ui.Ui;
 
 /**
  * Main application class for Merlie the Merlion chatbot.

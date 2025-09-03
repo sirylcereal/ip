@@ -1,12 +1,12 @@
 package merlie.command;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import merlie.listfile.ListFile;
 import merlie.task.Task;
 import merlie.tasklist.TaskList;
 import merlie.ui.Ui;
-import merlie.listfile.ListFile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Finds tasks whose descriptions contain a specified keyword.
@@ -24,11 +24,11 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Executes the find command by displaying all tasks
-     * that contain the keyword in their description.
+     * Executes the find command by displaying all tasks that contain the keyword in
+     * their description.
      *
-     * @param list     TaskList to search in.
-     * @param ui       Ui object to display output.
+     * @param list TaskList to search in.
+     * @param ui Ui object to display output.
      * @param listFile ListFile (not used for find command, can be null).
      */
     @Override

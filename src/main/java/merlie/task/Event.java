@@ -13,17 +13,16 @@ public class Event extends Task {
     private boolean hasFromTime;
 
     /**
-     * Constructs an Event with the given description, start time, end time,
-     * and flags indicating whether each date includes a specific time.
+     * Constructs an Event with the given description, start time, end time, and
+     * flags indicating whether each date includes a specific time.
      *
      * @param description Description of the event.
-     * @param from        Start time of the event.
+     * @param from Start time of the event.
      * @param hasFromTime Whether the start time includes a specific time.
-     * @param to          End time of the event.
-     * @param hasToTime   Whether the end time includes a specific time.
+     * @param to End time of the event.
+     * @param hasToTime Whether the end time includes a specific time.
      */
-    public Event(String description, LocalDateTime from, boolean hasFromTime,
-                 LocalDateTime to, boolean hasToTime) {
+    public Event(String description, LocalDateTime from, boolean hasFromTime, LocalDateTime to, boolean hasToTime) {
         super(description);
         this.from = from;
         this.hasFromTime = hasFromTime;
@@ -81,8 +80,7 @@ public class Event extends Task {
     public boolean isDuplicate(Task other) {
         if (this.isSameDescription(other)) {
             if (other instanceof Event e) {
-                return this.from.equals(e.getFrom())
-                        && this.to.equals(e.getTo());
+                return this.from.equals(e.getFrom()) && this.to.equals(e.getTo());
             }
             return true;
         }
@@ -102,8 +100,8 @@ public class Event extends Task {
     @Override
     public String format() {
         return "E | " + (isDone ? "1" : "0") + " | " + description + " | "
-                + this.from.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"))
-                + " /to " + this.to.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+            + this.from.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")) + " /to "
+            + this.to.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
     }
 
     @Override

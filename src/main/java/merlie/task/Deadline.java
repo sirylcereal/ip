@@ -69,22 +69,22 @@ public class Deadline extends Task {
     @Override
     public String format() {
         if (hasByTime) {
-            return "D | " + (isDone ? "1" : "0") + " | " + description + " | " +
-                    by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
+            return "D | " + (isDone ? "1" : "0") + " | " + description + " | "
+                    + by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"));
         } else {
-            return "D | " + (isDone ? "1" : "0") + " | " + description + " | " +
-                    by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            return "D | " + (isDone ? "1" : "0") + " | " + description + " | "
+                    + by.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
     }
 
     @Override
     public String toString() {
         if (hasByTime) {
-            return "[D]" + super.toString() + " (by: " +
-                    by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
+            return "[D]" + super.toString() + " (by: "
+                    + by.format(DateTimeFormatter.ofPattern("MMM d yyyy h:mma")) + ")";
         } else {
-            return "[D]" + super.toString() + " (by: " +
-                    by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+            return "[D]" + super.toString() + " (by: "
+                    + by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
         }
     }
 }

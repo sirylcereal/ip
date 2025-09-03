@@ -1,11 +1,10 @@
 package merlie.ui;
 
+import java.util.List;
+import java.util.Scanner;
+
 import merlie.task.Task;
 import merlie.tasklist.TaskList;
-
-import java.util.Scanner;
-import java.util.List;
-
 
 /**
  * Handles all user interactions, such as displaying messages, task updates, and reading input.
@@ -72,7 +71,7 @@ public class Ui {
     }
 
     /**
-     * Prints all matcheing tasks in the provided List<Task>.
+     * Prints all matching tasks in the provided list of tasks.
      *
      * @param list The list of tasks containing all matches to display.
      */

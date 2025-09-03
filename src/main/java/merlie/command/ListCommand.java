@@ -1,8 +1,8 @@
 package merlie.command;
 
+import merlie.listfile.ListFile;
 import merlie.tasklist.TaskList;
 import merlie.ui.Ui;
-import merlie.listfile.ListFile;
 
 /**
  * Displays all tasks in the task list.

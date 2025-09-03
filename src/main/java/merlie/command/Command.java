@@ -1,13 +1,13 @@
 package merlie.command;
 
+import merlie.exception.MerlieException;
+import merlie.listfile.ListFile;
 import merlie.tasklist.TaskList;
 import merlie.ui.Ui;
-import merlie.listfile.ListFile;
-import merlie.exception.MerlieException;
 
 /**
- * Abstract class representing a generic command.
- * All commands should extend this class and implement the execute method.
+ * Abstract class representing a generic command. All commands should extend
+ * this class and implement the execute method.
  */
 public abstract class Command {
     /**
@@ -21,8 +21,8 @@ public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, ListFile listFile) throws MerlieException;
 
     /**
-     * Returns whether this command signals the program to exit.
-     * Always false for non-exit commands.
+     * Returns whether this command signals the program to exit. Always false for
+     * non-exit commands.
      */
     public boolean isExit() {
         return false;
