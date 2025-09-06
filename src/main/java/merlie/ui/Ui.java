@@ -16,11 +16,16 @@ public class Ui {
      * Prints a welcome message when the application starts.
      */
     public void start() {
+        //return "\nHello! I'm Merlie the Merlione" + printLine() + "What can I do for you?" + printLine()
         System.out.print("\n");
         printLine();
         output("Hello! I'm Merlie the Merlion");
         output("What can I do for you?");
         printLine();
+    }
+
+    public String getStartForGui() {
+        return "Hello! I'm Merlie the Merlion\nWhat can I do for you?";
     }
 
     /**
@@ -150,6 +155,10 @@ public class Ui {
      */
     public void echo(String message) {
         output("Echo after you AH!: " + message);
+    }
+
+    public String formatForGui(String rawOutput) {
+        return rawOutput.replaceAll("Merlie: ", "").trim();
     }
 
     /**

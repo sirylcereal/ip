@@ -1,5 +1,8 @@
 package merlie;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import merlie.command.Command;
 import merlie.exception.MerlieException;
 import merlie.listfile.ListFile;
@@ -16,6 +19,9 @@ public class Merlie {
     private final TaskList taskList;
     private final ListFile listFile;
     private boolean isExit = false;
+    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private PrintStream ps = new PrintStream(baos);
+
 
     /**
      * Constructs a Merlie application instance with the specified data file.
@@ -51,6 +57,52 @@ public class Merlie {
                 ui.printLine();
             }
         }
+    }
+
+    /**
+     * Gets the welcome message for GUI initialization.
+     *
+     * @return The formatted welcome message as a String.
+     */
+    public String getStartMessage() {
+        return ui.getStartForGui();
+    }
+
+    /**
+     * Processes a single user input and returns the chatbot's response as a String for the GUI.
+     *
+     * @param input The raw input string entered by the user.
+     * @return The chatbot's response, formatted for GUI display.
+     */
+    public String getResponse(String input) {
+        baos.reset();
+        System.setOut(this.ps);
+
+        try {
+            Command c = Parser.parse(input);
+            c.execute(taskList, ui, listFile);
+            this.isExit = c.isExit();
+        } catch (MerlieException e) {
+            if (e.getMessage().isEmpty()) {
+                ui.echo(input);
+            } else {
+                ui.errorOutput(e.getMessage());
+            }
+        } finally {
+            ps.flush();
+            String response = baos.toString();
+            //System.setOut(System.out);
+            return this.ui.formatForGui(response);
+        }
+    }
+
+    /**
+     * Checks if the application should exit.
+     *
+     * @return true if exit command was executed, false otherwise.
+     */
+    public boolean isExit() {
+        return this.isExit;
     }
 
     /**
