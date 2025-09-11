@@ -45,6 +45,7 @@ public class Merlie {
             try {
                 input = ui.readInput();
                 Command c = Parser.parse(input);
+                assert c != null : "Parser must return valid command or throw exception";
                 c.execute(taskList, ui, listFile);
                 this.isExit = c.isExit();
             } catch (MerlieException e) {
@@ -80,6 +81,7 @@ public class Merlie {
 
         try {
             Command c = Parser.parse(input);
+            assert c != null : "Parser must return valid command or throw exception";
             c.execute(taskList, ui, listFile);
             this.isExit = c.isExit();
         } catch (MerlieException e) {
@@ -91,7 +93,6 @@ public class Merlie {
         } finally {
             ps.flush();
             String response = baos.toString();
-            //System.setOut(System.out);
             return this.ui.formatForGui(response);
         }
     }
