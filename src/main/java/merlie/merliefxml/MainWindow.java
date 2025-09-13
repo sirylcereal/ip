@@ -49,8 +49,9 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Creates two dialog boxes, one echoing user input
-     * and the other containing Duke's reply and then appends them to the dialog container.
+     * and the other containing Merlie's reply and then appends them to the dialog container.
      * Clears the user input after processing.
+     * Closes the Merlie GUI Window when user sends Exit command
      */
     @FXML
     private void handleUserInput() {
@@ -62,7 +63,7 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
 
-        if (merlie.isExit()) {
+        if (merlie.isExited()) {
             userInput.setDisable(true);
             sendButton.setDisable(true);
 

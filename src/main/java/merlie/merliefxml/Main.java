@@ -10,10 +10,9 @@ import javafx.stage.Stage;
 import merlie.Merlie;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Merlie using FXML.
  */
 public class Main extends Application {
-
     private Merlie merlie = new Merlie("./data/taskList.txt");
 
     @Override
