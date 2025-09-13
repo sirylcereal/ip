@@ -24,7 +24,7 @@ public abstract class Command {
      * Returns whether this command signals the program to exit. Always false for
      * non-exit commands.
      */
-    public boolean isExit() {
+    public boolean isExited() {
         return false;
     }
 }

@@ -10,16 +10,16 @@ import merlie.ui.Ui;
  * Marks a task in the task list as not done.
  */
 public class UnmarkCommand extends Command {
-    /** Index of the task to mark as undone */
-    private final int index;
+    private static final String INVALID_INDEX_ERROR = "enter a valid task number";
+    private final int taskIndex;
 
     /**
      * Constructs an UnmarkCommand for the specified task index.
      *
      * @param index Index of task to mark undone.
      */
-    public UnmarkCommand(int index) {
-        this.index = index;
+    public UnmarkCommand(int taskIndex) {
+        this.taskIndex = taskIndex;
     }
 
     /**
@@ -29,14 +29,13 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {
-        if (index < 0 || index >= list.size()) {
-            ui.errorOutput("enter a valid task number");
-            return;
+        if (!list.isValidIndex(taskIndex)) {
+            throw new MerlieException(INVALID_INDEX_ERROR);
         }
 
-        Task task = list.getTask(index);
-        list.markUndone(index);
+        Task task = list.getTask(this.taskIndex);
+        list.markUndone(this.taskIndex);
         listFile.save(list);
-        ui.markUndoneOutput(list.getTask(index));
+        ui.markUndoneOutput(task);
     }
 }

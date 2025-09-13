@@ -15,6 +15,9 @@ import merlie.tasklist.TaskList;
  * Handles saving and loading of tasks to and from a file.
  */
 public class ListFile {
+    private static final String CANNOT_LOAD_LINE_WARNING = "[Warning] Cannot load line: ";
+    private static final String CANNOT_LOAD_TASKS_WARNING = "[Warning] Cannot load tasks: ";
+    private static final String SAVE_TASK_ERROR = "error with saving tasks: ";
     private final String filePath;
 
     /**
@@ -32,8 +35,9 @@ public class ListFile {
      * @return TaskList containing the tasks read from the file.
      */
     public TaskList load() {
-        TaskList list = new TaskList();
+        TaskList loadedTasks = new TaskList();
         Path path = Paths.get(filePath);
+
         try {
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
@@ -42,37 +46,37 @@ public class ListFile {
             // Ensure file exists
             if (!Files.exists(path)) {
                 Files.createFile(path);
-                return list; // empty list
+                return loadedTasks; // empty list
             }
 
             List<String> lines = Files.readAllLines(path);
             for (String line : lines) {
                 try {
                     Task task = Task.process(line);
-                    list.add(task);
+                    loadedTasks.add(task);
                 } catch (MerlieException e) {
-                    System.out.println("[Warning] Cannot load line: " + line + "\n" + e.getMessage());
+                    System.out.println(CANNOT_LOAD_LINE_WARNING + line + "\n" + e.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.out.println("[Warning] Cannot load tasks: " + e.getMessage());
+            System.out.println(CANNOT_LOAD_TASKS_WARNING + e.getMessage());
         }
-        return list;
+        return loadedTasks;
     }
 
     /**
      * Saves the tasks to file.
      *
-     * @param list TaskList to save to file.
+     * @param taskList TaskList to save to file.
      * @throws MerlieException If an error occurs during saving.
      */
-    public void save(TaskList list) throws MerlieException {
+    public void save(TaskList taskList) throws MerlieException {
         try (FileWriter fw = new FileWriter(filePath)) {
-            for (Task task : list) {
+            for (Task task : taskList) {
                 fw.write(task.format() + "\n");
             }
         } catch (IOException e) {
-            throw new MerlieException("error with saving tasks: " + e.getMessage());
+            throw new MerlieException(SAVE_TASK_ERROR + e.getMessage());
         }
     }
 }

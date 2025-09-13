@@ -10,16 +10,16 @@ import merlie.ui.Ui;
  * Marks a task in the task list as done.
  */
 public class MarkCommand extends Command {
-    /** Index of the task to mark as done */
-    private final int index;
+    private static final String INVALID_INDEX_ERROR = "enter a valid task number";
+    private final int taskIndex;
 
     /**
      * Constructs a MarkCommand for the specified task index.
      *
      * @param index Index of task to mark.
      */
-    public MarkCommand(int index) {
-        this.index = index;
+    public MarkCommand(int taskIndex) {
+        this.taskIndex = taskIndex;
     }
 
     /**
@@ -29,14 +29,13 @@ public class MarkCommand extends Command {
      */
     @Override
     public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {
-        if (index < 0 || index >= list.size()) {
-            ui.errorOutput("enter a valid task number");
-            return;
+        if (!list.isValidIndex(this.taskIndex)) {
+            throw new MerlieException(INVALID_INDEX_ERROR);
         }
 
-        Task task = list.getTask(index);
-        list.markDone(index);
+        Task task = list.getTask(this.taskIndex);
+        list.markDone(this.taskIndex);
         listFile.save(list);
-        ui.markDoneOutput(list.getTask(index));
+        ui.markDoneOutput(task);
     }
 }

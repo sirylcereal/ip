@@ -15,7 +15,7 @@ public class ListCommand extends Command {
     @Override
     public void execute(TaskList list, Ui ui, ListFile listFile) {
         if (list.isEmpty()) {
-            ui.taskSizeOutput(0);
+            ui.taskSizeOutput(list.size());
         } else {
             ui.showList(list);
         }

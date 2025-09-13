@@ -21,6 +21,8 @@ public class ParsedDate {
             DateTimeFormatter.ofPattern("d-M-yyyy HHmm"),
             DateTimeFormatter.ofPattern("d/M/yyyy HHmm")
     };
+    private static final String INVALID_DATE_FORMAT_ERROR = "invalid date format. "
+            + "Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)";
     public final LocalDateTime dateTime;
     public final boolean hasTime;
 
@@ -61,8 +63,7 @@ public class ParsedDate {
             }
         }
 
-        throw new MerlieException("invalid date format. "
-                + "Use yyyy-MM-dd (HHmm), d-M-yyyy (HHmm), or d/M/yyyy (HHmm)");
+        throw new MerlieException(INVALID_DATE_FORMAT_ERROR);
     }
 
     public LocalDateTime getDate() {

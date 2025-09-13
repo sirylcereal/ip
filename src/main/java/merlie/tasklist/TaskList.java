@@ -46,6 +46,7 @@ public class TaskList implements Iterable<Task> {
      * Marks the task at the specified index as done.
      *
      * @param index Index of the task to mark as done.
+     * @throws IndexOutOfBoundsException if index is invalid.
      */
     public void markDone(int index) {
         this.tasks.get(index).markDone();
@@ -115,13 +116,15 @@ public class TaskList implements Iterable<Task> {
     /**
      * Checks if a task is already in the list.
      * If a duplicate is found, reports an error.
-     * If an update is successful, saves the list and shows update output.
+     * If an update is successful (existent task with updated fields),
+     * saves the list and shows update output.
      *
      * @param newTask The task to check.
      * @param ui User interface object for displaying messages.
      * @param listFile ListFile object to save the list if updated.
      * @return true if the task is a duplicate or successfully updated, false otherwise.
      * @throws MerlieException If saving the list fails.
+     * @throws IndexOutOfBoundsException for delete
      */
     public boolean isTaskInList(Task newTask, Ui ui, ListFile listFile) throws MerlieException {
         for (Task task : this.tasks) {
@@ -136,5 +139,15 @@ public class TaskList implements Iterable<Task> {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if the given index is within the bounds of the task list.
+     *
+     * @param index The index to check.
+     * @return true if the index is valid (0 ≤ index < size of the list), false otherwise.
+     */
+    public boolean isValidIndex(int index) {
+        return index >= 0 && index < this.tasks.size();
     }
 }
