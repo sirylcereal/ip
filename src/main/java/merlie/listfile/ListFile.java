@@ -49,6 +49,8 @@ public class ListFile {
                 return loadedTasks; // empty list
             }
 
+            assert Files.exists(path) : "File should exist";
+
             List<String> lines = Files.readAllLines(path);
             for (String line : lines) {
                 try {
