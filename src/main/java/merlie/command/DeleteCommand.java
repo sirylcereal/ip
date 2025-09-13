@@ -10,15 +10,16 @@ import merlie.ui.Ui;
  * Deletes a task from the task list.
  */
 public class DeleteCommand extends Command {
-    private final int index;
+    private static final String INVALID_INDEX_ERROR = "enter a valid task number";
+    private final int taskIndex;
 
     /**
      * Constructs a DeleteCommand for the specified task index.
      *
      * @param index Index of task to delete.
      */
-    public DeleteCommand(int index) {
-        this.index = index;
+    public DeleteCommand(int taskIndex) {
+        this.taskIndex = taskIndex;
     }
 
     /**
@@ -27,14 +28,14 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList list, Ui ui, ListFile listFile) throws MerlieException {
-        if (index < 0 || index >= list.size()) {
-            ui.errorOutput("enter a valid task number");
-            return;
+        if (!list.isValidIndex(this.taskIndex)) {
+            throw new MerlieException(INVALID_INDEX_ERROR);
         }
 
-        Task task = list.getTask(index);
-        list.delete(index);
+        Task task = list.getTask(this.taskIndex);
+        list.delete(this.taskIndex);
         listFile.save(list);
         ui.deleteOutput(task, list.size());
     }
+
 }

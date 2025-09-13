@@ -43,7 +43,7 @@ public class Deadline extends Task {
      */
     private void setBy(LocalDateTime by, boolean hasByTime) {
         this.by = by;
-        this.hasByTime = hasByTime;;
+        this.hasByTime = hasByTime;
     }
 
     @Override

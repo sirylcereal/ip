@@ -18,9 +18,9 @@ public class Merlie {
     private final Ui ui;
     private final TaskList taskList;
     private final ListFile listFile;
-    private boolean isExit = false;
-    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    private PrintStream ps = new PrintStream(baos);
+    private boolean isExited = false;
+    private final ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
+    private final PrintStream printStream = new PrintStream(outputBuffer);
 
 
     /**
@@ -37,17 +37,17 @@ public class Merlie {
     /**
      * Runs the main loop of the application.
      * Reads user input, parses commands, and executes them until exit.
+     * Empty MerlieException indicates the user entered an unrecognized or empty command.
      */
     public void run() {
         ui.start();
-        while (!this.isExit) {
-            String input = "";
+        while (!this.isExited) {
+            String input = ui.readInput();
             try {
-                input = ui.readInput();
                 Command c = Parser.parse(input);
                 assert c != null : "Parser must return valid command or throw exception";
                 c.execute(taskList, ui, listFile);
-                this.isExit = c.isExit();
+                this.isExited = c.isExited();
             } catch (MerlieException e) {
                 if (e.getMessage().isEmpty()) {
                     ui.echo(input);
@@ -76,25 +76,31 @@ public class Merlie {
      * @return The chatbot's response, formatted for GUI display.
      */
     public String getResponse(String input) {
-        baos.reset();
-        System.setOut(this.ps);
+        PrintStream originalOut = System.out;
+
+        outputBuffer.reset();
+        System.setOut(this.printStream);
 
         try {
             Command c = Parser.parse(input);
             assert c != null : "Parser must return valid command or throw exception";
             c.execute(taskList, ui, listFile);
-            this.isExit = c.isExit();
+            this.isExited = c.isExited();
         } catch (MerlieException e) {
             if (e.getMessage().isEmpty()) {
                 ui.echo(input);
             } else {
                 ui.errorOutput(e.getMessage());
             }
+        } catch (Exception e) {
+            ui.errorOutput("unexpected error");
         } finally {
-            ps.flush();
-            String response = baos.toString();
-            return this.ui.formatForGui(response);
+            printStream.flush();
+            System.setOut(originalOut);
         }
+
+        String response = outputBuffer.toString();
+        return this.ui.formatForGui(response);
     }
 
     /**
@@ -102,8 +108,8 @@ public class Merlie {
      *
      * @return true if exit command was executed, false otherwise.
      */
-    public boolean isExit() {
-        return this.isExit;
+    public boolean isExited() {
+        return this.isExited;
     }
 
     /**

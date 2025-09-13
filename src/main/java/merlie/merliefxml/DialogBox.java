@@ -37,10 +37,8 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
-
         this.setSpacing(10);
         this.setPadding(new Insets(10, 10, 10, 10));
-
         dialog.setWrapText(true);
         dialog.setStyle("-fx-padding: 8;"
                 + "-fx-background-color: #FF4B5C; "
@@ -59,10 +57,24 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Creates a dialog box for user messages (image on the right, text on the left).
+     *
+     * @param text The message content.
+     * @param img  The user's display picture.
+     * @return A DialogBox styled for user messages.
+     */
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
+    /**
+     * Creates a dialog box for Merlie's messages (image on the left, text on the right).
+     *
+     * @param text The message content.
+     * @param img  The Merlie display picture.
+     * @return A DialogBox styled for Merlie's responses.
+     */
     public static DialogBox getMerlieDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
