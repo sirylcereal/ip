@@ -41,7 +41,7 @@ public class DialogBox extends HBox {
         this.setPadding(new Insets(10, 10, 10, 10));
         dialog.setWrapText(true);
         dialog.setStyle("-fx-padding: 8;"
-                + "-fx-background-color: #FF4B5C; "
+                + "-fx-background-color: #ec384aff; "
                 + "-fx-text-fill: white; "
                 + "-fx-font-weight: bold;"
                 + "-fx-background-radius: 12;");
