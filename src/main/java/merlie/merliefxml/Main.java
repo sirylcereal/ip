@@ -22,7 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            stage.setTitle("Merlie the Merlion");
+            stage.setTitle("Merlie the Merlion Chat");
             fxmlLoader.<MainWindow>getController().setMerlie(merlie);
             stage.show();
         } catch (IOException e) {
