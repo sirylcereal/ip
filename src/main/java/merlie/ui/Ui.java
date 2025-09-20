@@ -134,7 +134,7 @@ public class Ui {
      * @param size The total number of tasks after deletion.
      */
     public void deleteOutput(Task task, int size) {
-        output("Okie, I’ve sprayed water on the task, so it has EXSTINGUISHED…:");
+        output("Okie, I’ve sprayed water on the task, so it has EXTINGUISHED…:");
         System.out.println("     " + task);
         output("Now you have " + size + " tasks in the list.");
     }
